@@ -6,6 +6,10 @@
 
 ---
 
+**TL;DR.** I built a movie recommender where a large language model proposes candidates and a second model grades them against your taste. For the grading step I compared Jev, a small model from TypeSafe AI that only answers typed questions and costs $0.042 per million tokens, against Claude Sonnet 4.6 acting as a judge, on 50 real MovieLens users with their actual later ratings as ground truth. Ranking quality was a statistical tie: Jev matched the LLM judge on the standard metrics and beat it on whether the first recommendation was a hit. Jev did it 59 times cheaper and 11 times faster. Code, protocol and raw results are public.
+
+---
+
 Most LLM products have a step where the model is asked to grade something. Rank these candidates. Pick the best of five drafts. Decide whether this answer violates a rule. That step is usually done by calling the same large language model again with a "you are a strict judge" prompt, parsing its answer, and hoping it was consistent.
 
 It works, but it is slow and it is expensive, and the model gives you a number with no honest sense of how sure it is.
@@ -43,6 +47,8 @@ Under the hood it runs five steps:
 3. **Verification.** Every proposed title is looked up in The Movie Database (TMDB). Titles that do not exist are dropped. LLMs invent movies more often than you would think, and no scoring model can grade a film that is not real.
 4. **Rerank.** Each verified movie is scored against the profile and the list is reordered. This is the step under test.
 5. **Explanations.** The LLM writes one sentence for each of the top five.
+
+![How the recommender talks to each model](pipeline.png)
 
 The rerank step is behind a small interface with one method: given a profile and a list of movies, return a verdict per movie. Three implementations exist and can be switched with an environment variable.
 
