@@ -3,6 +3,7 @@
 *A reproducible test of TypeSafe AI's Jev as a reranker, against Claude as a judge, on real MovieLens users.*
 
 *This article was written by me and enhanced with AI. The experiment, the code and the numbers are mine; the AI helped with structure and wording.*
+
 ---
 
 Most LLM products have a step where the model is asked to grade something. Rank these candidates. Pick the best of five drafts. Decide whether this answer violates a rule. That step is usually done by calling the same large language model again with a "you are a strict judge" prompt, parsing its answer, and hoping it was consistent.
