@@ -89,6 +89,19 @@ uv run pytest -q          # offline: LLM/catalog fakes, Jev mocked with respx
 uv run pip-audit
 ```
 
+## Offline evaluation
+
+Does Jev beat an LLM judge and random order on the same rubric? `scripts/eval_movielens.py`
+holds out each MovieLens user's last 5 liked movies, mixes them with 15 popular unseen ones,
+and lets every reranker order the same 20 against the same profile (ADR 0004).
+
+```bash
+uv run python scripts/eval_movielens.py --users 50            # ~$4 in LLM-judge calls
+uv run python scripts/eval_movielens.py --users 5 --rerankers none,jev   # cheap smoke test
+```
+
+LLM outputs are cached in `data/eval/` so reruns only hit Jev. Results: [docs/eval.md](docs/eval.md).
+
 ## Security notes
 
 - Secrets only via env; `SecretStr` prevents accidental logging.

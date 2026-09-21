@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 
 from pydantic import BaseModel, Field
 
-from moviejev.llm.base import LLM
+from moviejev.llm.base import LLM, LLMError
 from moviejev.models import Movie, TasteProfile, Verdict
 from moviejev.reranker.base import FIT_LEVELS, REASON_CHOICES, VIOLATION_INSTRUCTION, Reranker
+
+log = logging.getLogger(__name__)
 
 _SYSTEM = (
     "You are a strict movie-recommendation judge. Reply with a single JSON object and nothing else."
@@ -31,14 +34,16 @@ class LLMJudgeReranker(Reranker):
     async def _judge_one(self, profile: TasteProfile, movie: Movie) -> Verdict:
         levels = "\n".join(f"{i}: {t}" for i, t in enumerate(FIT_LEVELS))
         reasons = "\n".join(f"{k}: {v}" for k, v in REASON_CHOICES.items())
+        keys = "[" + ", ".join(REASON_CHOICES) + "]"
         user = (
             f"## Viewer profile\n{profile.as_state()}\n\n## Candidate movie\n{movie.as_state()}\n\n"
             f"Rate fit on this scale:\n{levels}\n\nMain match dimension (one key):\n{reasons}\n\n"
             f"violates: true if '{VIOLATION_INSTRUCTION}'.\n\n"
-            'Return: {"fit_level": int, "reason": string, "violates": bool}'
+            f'Return exactly: {{"fit_level": int, "reason": one of {keys}, "violates": bool}}. '
+            "No prose, no explanation."
         )
         async with self._sem:
-            j = await self._llm.complete_json(_SYSTEM, user, _Judgement, max_tokens=200)
+            j = await self._llm.complete_json(_SYSTEM, user, _Judgement, max_tokens=400)
         reason = j.reason if j.reason in REASON_CHOICES else "themes"
         return Verdict(
             movie=movie,
@@ -49,4 +54,15 @@ class LLMJudgeReranker(Reranker):
         )
 
     async def judge(self, profile: TasteProfile, movies: list[Movie]) -> list[Verdict]:
-        return list(await asyncio.gather(*(self._judge_one(profile, m) for m in movies)))
+        results = await asyncio.gather(
+            *(self._judge_one(profile, m) for m in movies), return_exceptions=True
+        )
+        verdicts: list[Verdict] = []
+        for m, res in zip(movies, results, strict=True):
+            if isinstance(res, BaseException):
+                log.warning("llm_judge failed for %r, dropping: %s", m.title, res)
+                continue
+            verdicts.append(res)
+        if movies and not verdicts:
+            raise LLMError("all llm_judge calls failed")
+        return verdicts

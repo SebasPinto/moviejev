@@ -33,6 +33,24 @@ class _TMDBSearch(BaseModel):
     results: list[_TMDBResult] = Field(default_factory=list)
 
 
+class _TMDBGenre(BaseModel):
+    id: int
+
+
+class _TMDBDetail(BaseModel):
+    id: int
+    title: str = Field(max_length=300)
+    release_date: str = ""
+    overview: str = ""
+    genres: list[_TMDBGenre] = Field(default_factory=list)
+    popularity: float = 0.0
+
+
+def _year(release_date: str) -> int | None:
+    head = release_date[:4]
+    return int(head) if len(head) == 4 and head.isdigit() else None
+
+
 class TMDBCatalog(Catalog):
     def __init__(self, api_key: str, base_url: str, timeout_s: float, concurrency: int = 6) -> None:
         self._client = httpx.AsyncClient(
@@ -60,16 +78,32 @@ class TMDBCatalog(Catalog):
         if not parsed.results:
             return None
         best = parsed.results[0]
-        year = (
-            int(best.release_date[:4])
-            if len(best.release_date) >= 4 and best.release_date[:4].isdigit()
-            else None
-        )
         return Movie(
             tmdb_id=best.id,
             title=best.title,
-            year=year,
+            year=_year(best.release_date),
             overview=best.overview[:1200],
             genres=[_GENRES[g] for g in best.genre_ids if g in _GENRES],
             popularity=best.popularity,
+        )
+
+    async def fetch(self, tmdb_id: int) -> Movie | None:
+        """Movie card by TMDB id. Used by the offline eval, where ids come from MovieLens."""
+        async with self._sem:
+            try:
+                r = await self._client.get(f"/movie/{tmdb_id}")
+                if r.status_code == 404:
+                    return None
+                r.raise_for_status()
+                d = _TMDBDetail.model_validate(r.json())
+            except (httpx.HTTPError, ValidationError, ValueError) as e:
+                log.warning("tmdb fetch failed for %d: %s", tmdb_id, e)
+                return None
+        return Movie(
+            tmdb_id=d.id,
+            title=d.title,
+            year=_year(d.release_date),
+            overview=d.overview[:1200],
+            genres=[_GENRES[g.id] for g in d.genres if g.id in _GENRES],
+            popularity=d.popularity,
         )

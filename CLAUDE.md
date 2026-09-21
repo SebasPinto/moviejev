@@ -27,7 +27,7 @@ and commits: English. Conversation with the owner: Spanish is fine.
 - **Semver + CHANGELOG.** Any user-visible change gets a CHANGELOG entry under `[Unreleased]`.
 - **ADRs for reversible-but-costly decisions** in `docs/adr/NNNN-slug.md` (Context / Decision /
   Consequences). Existing: 0001 Jev is a reranker, 0002 httpx instead of SDK, 0003 per-candidate
-  state. Read them before proposing changes to those areas.
+  state, 0004 eval protocol. Read them before proposing changes to those areas.
 
 ## Commands
 
@@ -56,6 +56,8 @@ src/moviejev/
   pipeline.py     Orchestration only. No provider-specific code here.
   wiring.py       Builds object graph from Settings. Only place secrets are unwrapped.
   api.py, cli.py  Thin delivery layers. No business logic.
+  eval/           Offline MovieLens eval (dataset, metrics, cache, runner). ADR 0004.
+scripts/eval_movielens.py  Entry point for the eval.
 tests/            conftest.py has FakeLLM, FakeCatalog, movie() helper
 docs/             architecture.md, threat-model.md, roadmap.md, adr/
 ```

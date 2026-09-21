@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import TypeVar
 
 from pydantic import BaseModel, ValidationError
@@ -16,8 +17,25 @@ class LLMError(RuntimeError):
     pass
 
 
+@dataclass
+class TokenUsage:
+    """Cumulative token counts, for cost reporting. Adapters add to it on every call."""
+
+    calls: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+    def add(self, input_tokens: int, output_tokens: int) -> None:
+        self.calls += 1
+        self.input_tokens += input_tokens
+        self.output_tokens += output_tokens
+
+
 class LLM(ABC):
     """Minimal provider-agnostic text LLM. Only what the pipeline needs."""
+
+    def __init__(self) -> None:
+        self.usage = TokenUsage()
 
     @abstractmethod
     async def complete(self, system: str, user: str, max_tokens: int = 1024) -> str: ...

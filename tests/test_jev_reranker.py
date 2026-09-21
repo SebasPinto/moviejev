@@ -62,6 +62,7 @@ async def test_judge_parses_and_flags_low_confidence(
     assert out[1].expected_fit == pytest.approx(0.25) and out[1].low_confidence
     assert out[1].violation_prob == 0.9 and out[1].reason == "genre"
     assert out[1].final_score == pytest.approx(0.025)
+    assert jev.usage.calls == 2 and jev.usage.input_tokens == 200
 
 
 @respx.mock

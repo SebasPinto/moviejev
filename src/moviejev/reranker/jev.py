@@ -7,6 +7,7 @@ from typing import Any
 import httpx
 from pydantic import BaseModel, Field, ValidationError
 
+from moviejev.llm.base import TokenUsage
 from moviejev.models import Movie, TasteProfile, Verdict
 from moviejev.reranker.base import (
     FIT_LEVELS,
@@ -34,9 +35,15 @@ class _NoulAnswer(BaseModel):
     noul: float = Field(ge=0, le=1)
 
 
+class _Usage(BaseModel):
+    input_tokens: int = 0
+    output_tokens: int = 0
+
+
 class _JevResponse(BaseModel):
     model: str = ""
     answers: dict[str, dict[str, Any]]
+    usage: _Usage = Field(default_factory=_Usage)
 
 
 class JevError(RuntimeError):
@@ -65,6 +72,7 @@ class JevReranker(Reranker):
         self._model = model
         self._min_conf = min_confidence
         self._sem = asyncio.Semaphore(concurrency)
+        self.usage = TokenUsage()
 
     async def aclose(self) -> None:
         await self._client.aclose()
@@ -106,6 +114,7 @@ class JevReranker(Reranker):
             viol = _NoulAnswer.model_validate(parsed.answers["violates"])
         except (ValidationError, KeyError, ValueError) as e:
             raise JevError(f"unexpected jev payload: {e}") from e
+        self.usage.add(parsed.usage.input_tokens, parsed.usage.output_tokens)
         return Verdict(
             movie=movie,
             expected_fit=expected_value(fit.probabilities, len(FIT_LEVELS)),

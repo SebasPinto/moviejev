@@ -13,6 +13,7 @@ class FakeLLM(LLM):
     """Scripted LLM: returns canned JSON keyed by which system prompt is used."""
 
     def __init__(self, candidates: list[dict[str, object]]) -> None:
+        super().__init__()
         self.calls: list[str] = []
         self._cands = candidates
 

@@ -7,6 +7,7 @@ from moviejev.llm.base import LLM, LLMError
 
 class OpenAILLM(LLM):
     def __init__(self, api_key: str, model: str, timeout_s: float) -> None:
+        super().__init__()
         self._client = AsyncOpenAI(api_key=api_key, timeout=timeout_s, max_retries=2)
         self._model = model
 
@@ -16,6 +17,8 @@ class OpenAILLM(LLM):
             max_completion_tokens=max_tokens,
             messages=[{"role": "system", "content": system}, {"role": "user", "content": user}],
         )
+        if resp.usage:
+            self.usage.add(resp.usage.prompt_tokens, resp.usage.completion_tokens)
         text = resp.choices[0].message.content
         if not text:
             raise LLMError("empty completion")

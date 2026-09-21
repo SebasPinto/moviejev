@@ -1,0 +1,2433 @@
+{
+  "config": {
+    "users": 50,
+    "holdout": 5,
+    "negatives": 15,
+    "k": 10,
+    "seed": 42,
+    "min_train": 15,
+    "rerankers": [
+      "none",
+      "llm_judge",
+      "jev"
+    ],
+    "data_dir": "data",
+    "llm_price_in": 3.0,
+    "llm_price_out": 15.0,
+    "jev_price_in": 0.042,
+    "jev_price_out": 0.0
+  },
+  "users_evaluated": 50,
+  "profile_llm": {
+    "calls": 54,
+    "input_tokens": 12339,
+    "output_tokens": 17371,
+    "cost_usd": 0.2976
+  },
+  "rerankers": [
+    {
+      "reranker": "none",
+      "users": 50,
+      "ndcg@10": 0.3434,
+      "hit_rate@10": 0.96,
+      "hit@1": 0.24,
+      "precision@5": 0.204,
+      "mrr": 0.4369,
+      "low_confidence_rate": 0.0,
+      "errors": 0,
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0.0,
+      "latency_p50_s": 0.0,
+      "latency_p95_s": 0.0
+    },
+    {
+      "reranker": "llm_judge",
+      "users": 50,
+      "ndcg@10": 0.6248,
+      "hit_rate@10": 0.98,
+      "hit@1": 0.48,
+      "precision@5": 0.44,
+      "mrr": 0.6657,
+      "low_confidence_rate": 0.0,
+      "errors": 0,
+      "calls": 994,
+      "input_tokens": 524943,
+      "output_tokens": 22862,
+      "cost_usd": 1.9178,
+      "latency_p50_s": 11.444,
+      "latency_p95_s": 22.914
+    },
+    {
+      "reranker": "jev",
+      "users": 50,
+      "ndcg@10": 0.6012,
+      "hit_rate@10": 0.96,
+      "hit@1": 0.56,
+      "precision@5": 0.404,
+      "mrr": 0.7124,
+      "low_confidence_rate": 0.003,
+      "errors": 0,
+      "calls": 994,
+      "input_tokens": 776500,
+      "output_tokens": 82502,
+      "cost_usd": 0.0326,
+      "latency_p50_s": 1.049,
+      "latency_p95_s": 1.295
+    }
+  ],
+  "per_user": [
+    {
+      "user_id": 381,
+      "relevant": [
+        13,
+        10938,
+        12405,
+        24021,
+        31165
+      ],
+      "prompt": "I loved: Fantastic Mr. Fox (2009), Blind Side, The  (2009), 9 (2009), Coraline (2009), Harry Potter and the Half-Blood Prince (2009), Finding Nemo (2003), French Kiss (1995), Howl's Moving Castle (Hauru no ugoku shiro) (2004). I did not enjoy: American Haunting, An (2005), Home Alone (1990), Mask, The (1994), Pee-wee's Big Adventure (1985). Recommend movies I would rate highly.",
+      "none": [
+        12405,
+        524,
+        857,
+        2770,
+        2636,
+        24021,
+        17711,
+        9348,
+        9302,
+        49530
+      ],
+      "llm_judge": [
+        3573,
+        13,
+        31165,
+        10874,
+        12405,
+        24021,
+        10938,
+        9665,
+        49530,
+        857
+      ],
+      "jev": [
+        10938,
+        9302,
+        3573,
+        31165,
+        12405,
+        10874,
+        13,
+        9665,
+        857,
+        49530
+      ]
+    },
+    {
+      "user_id": 141,
+      "relevant": [
+        287,
+        2609,
+        9472,
+        264660,
+        281957
+      ],
+      "prompt": "I loved: Stranger than Fiction (2006), Caddyshack (1980), Grand Budapest Hotel, The (2014), Fight Club (1999), Social Network, The (2010), Django Unchained (2012), WALL\u00b7E (2008), Gladiator (2000). I did not enjoy: Star Wars: Episode III - Revenge of the Sith (2005), Ace Ventura: Pet Detective (1994), Ace Ventura: When Nature Calls (1995). Recommend movies I would rate highly.",
+      "none": [
+        586,
+        11663,
+        281957,
+        287,
+        264660,
+        13885,
+        9397,
+        1996,
+        8885,
+        9740
+      ],
+      "llm_judge": [
+        586,
+        10147,
+        13685,
+        264660,
+        13885,
+        281957,
+        8885,
+        287,
+        1573,
+        9740
+      ],
+      "jev": [
+        586,
+        13685,
+        9740,
+        11663,
+        264660,
+        8885,
+        13885,
+        1573,
+        281957,
+        10147
+      ]
+    },
+    {
+      "user_id": 255,
+      "relevant": [
+        525,
+        620,
+        11455,
+        11977,
+        13824
+      ],
+      "prompt": "I loved: Animal House (1978), Stripes (1981), Ace Ventura: Pet Detective (1994), Beverly Hills Cop III (1994), Star Wars: Episode VI - Return of the Jedi (1983), 3 Ninjas: High Noon On Mega Mountain (1998). I did not enjoy: Annie Hall (1977), Godfather: Part III, The (1990), Stuart Little (1999), American Beauty (1999). Recommend movies I would rate highly.",
+      "none": [
+        6950,
+        11,
+        11977,
+        85,
+        765,
+        9008,
+        274,
+        10637,
+        9922,
+        4104
+      ],
+      "llm_judge": [
+        11977,
+        620,
+        85,
+        11,
+        525,
+        37137,
+        11455,
+        765,
+        32657,
+        13824
+      ],
+      "jev": [
+        620,
+        11455,
+        11,
+        85,
+        11977,
+        37137,
+        525,
+        32657,
+        765,
+        9922
+      ]
+    },
+    {
+      "user_id": 424,
+      "relevant": [
+        103,
+        162,
+        3933,
+        11068,
+        264660
+      ],
+      "prompt": "I loved: Texas Chainsaw Massacre, The (1974), Insomnia (2002), Prisoners (2013), Talented Mr. Ripley, The (1999), South Park: Bigger, Longer and Uncut (1999), Larry David: Curb Your Enthusiasm (1999), Primal Fear (1996), Shutter Island (2010). I did not enjoy: Gone Girl (2014), Nutty Professor II: The Klumps (2000), Bringing Down the House (2003), Star Trek: The Motion Picture (1979). Recommend movies I would rate highly.",
+      "none": [
+        264660,
+        11068,
+        121,
+        9982,
+        11702,
+        9428,
+        11310,
+        244786,
+        162,
+        72105
+      ],
+      "llm_judge": [
+        103,
+        244786,
+        264660,
+        13885,
+        9428,
+        921,
+        3933,
+        162,
+        11702,
+        1587
+      ],
+      "jev": [
+        103,
+        13885,
+        244786,
+        9428,
+        18480,
+        11702,
+        162,
+        8675,
+        3933,
+        1587
+      ]
+    },
+    {
+      "user_id": 403,
+      "relevant": [
+        38,
+        500,
+        680,
+        9008,
+        9870
+      ],
+      "prompt": "I loved: Braveheart (1995), Seven (a.k.a. Se7en) (1995), American History X (1998), Office Space (1999), Goodfellas (1990), Indiana Jones and the Last Crusade (1989), Burn After Reading (2008), Thin Red Line, The (1998). I did not enjoy: Runaway Bride (1999), Tropic Thunder (2008). Recommend movies I would rate highly.",
+      "none": [
+        9870,
+        11326,
+        2621,
+        137,
+        500,
+        745,
+        667,
+        9008,
+        568,
+        838
+      ],
+      "llm_judge": [
+        680,
+        500,
+        9008,
+        745,
+        568,
+        903,
+        38,
+        82695,
+        838,
+        9032
+      ],
+      "jev": [
+        500,
+        9008,
+        680,
+        745,
+        903,
+        568,
+        82695,
+        667,
+        11326,
+        38
+      ]
+    },
+    {
+      "user_id": 76,
+      "relevant": [
+        1891,
+        9388,
+        10683,
+        41439
+      ],
+      "prompt": "I loved: Monty Python and the Holy Grail (1975), Saw (2004), Serenity (2005), Goodfellas (1990), Godfather, The (1972), Memento (2000), Monty Python's Life of Brian (1979), Saw VI (2009). I did not enjoy: Toy Story (1995), Twilight (2008), Aladdin (1992), Finding Nemo (2003). Recommend movies I would rate highly.",
+      "none": [
+        9388,
+        1592,
+        1865,
+        1933,
+        11359,
+        620,
+        10683,
+        14160,
+        15413,
+        154
+      ],
+      "llm_judge": [
+        12143,
+        1592,
+        41439,
+        1933,
+        10683,
+        154,
+        9388,
+        11386,
+        15413,
+        620
+      ],
+      "jev": [
+        41439,
+        1592,
+        12143,
+        11386,
+        1933,
+        154,
+        9388,
+        1891,
+        10683,
+        15413
+      ]
+    },
+    {
+      "user_id": 525,
+      "relevant": [
+        105,
+        658,
+        9802,
+        86705
+      ],
+      "prompt": "I loved: Fargo (1996), Moonrise Kingdom (2012), Miracle on 34th Street (1947), Muppet Christmas Carol, The (1992), Virgin Suicides, The (1999), Pride & Prejudice (2005), Remember the Titans (2000), Harry Potter and the Prisoner of Azkaban (2004). I did not enjoy: Jackass: The Movie (2002), Little Nicky (2000), Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan (2006), Old School (2003). Recommend movies I would rate highly.",
+      "none": [
+        11718,
+        754,
+        10778,
+        11412,
+        9350,
+        77930,
+        9802,
+        28,
+        86705,
+        658
+      ],
+      "llm_judge": [
+        10386,
+        105,
+        118,
+        21849,
+        10778,
+        28,
+        68718,
+        754,
+        658,
+        86705
+      ],
+      "jev": [
+        10386,
+        118,
+        105,
+        10778,
+        21849,
+        200,
+        11718,
+        658,
+        28,
+        11412
+      ]
+    },
+    {
+      "user_id": 256,
+      "relevant": [
+        165,
+        602,
+        70160,
+        101299,
+        310133
+      ],
+      "prompt": "I loved: Back to the Future (1985), Four Rooms (1995), Judge Dredd (1995), Demolition Man (1993), Men of Honor (2000), Beautiful Mind, A (2001), L\u00e9on: The Professional (a.k.a. The Professional) (L\u00e9on) (1994), Eternal Sunshine of the Spotless Mind (2004). I did not enjoy: Nausica\u00e4 of the Valley of the Wind (Kaze no tani no Naushika) (1984), Spirited Away (Sen to Chihiro no kamikakushi) (2001), Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan (2006), Brokeback Mountain (2005). Recommend movies I would rate highly.",
+      "none": [
+        154,
+        8587,
+        5001,
+        4824,
+        18203,
+        9571,
+        8885,
+        9383,
+        4566,
+        4476
+      ],
+      "llm_judge": [
+        165,
+        550,
+        4566,
+        154,
+        70160,
+        9383,
+        602,
+        4476,
+        22,
+        7516
+      ],
+      "jev": [
+        550,
+        9383,
+        4824,
+        154,
+        165,
+        602,
+        4566,
+        70160,
+        101299,
+        310133
+      ]
+    },
+    {
+      "user_id": 347,
+      "relevant": [
+        602,
+        862,
+        954,
+        9087,
+        11395
+      ],
+      "prompt": "I loved: Clueless (1995), Ace Ventura: When Nature Calls (1995), Sleepless in Seattle (1993), Babe (1995), Ghost (1990), Pretty Woman (1990), Lion King, The (1994), Speed (1994). Recommend movies I would rate highly.",
+      "none": [
+        9443,
+        9401,
+        6575,
+        186,
+        115,
+        954,
+        11395,
+        134,
+        532,
+        12092
+      ],
+      "llm_judge": [
+        11395,
+        862,
+        532,
+        11164,
+        11821,
+        9087,
+        12092,
+        9374,
+        602,
+        954
+      ],
+      "jev": [
+        11395,
+        862,
+        11821,
+        532,
+        11164,
+        9087,
+        41630,
+        12092,
+        602,
+        134
+      ]
+    },
+    {
+      "user_id": 148,
+      "relevant": [
+        672,
+        752,
+        38757,
+        81188,
+        205596
+      ],
+      "prompt": "I loved: Paperman (2012), Pride & Prejudice (2005), Phantom of the Opera, The (2004), WALL\u00b7E (2008), Piper (2016), Scott Pilgrim vs. the World (2010), The Lego Movie (2014), Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001). I did not enjoy: Inception (2010). Recommend movies I would rate highly.",
+      "none": [
+        17654,
+        117,
+        11358,
+        8963,
+        4587,
+        752,
+        38757,
+        205596,
+        672,
+        8367
+      ],
+      "llm_judge": [
+        672,
+        38757,
+        81188,
+        557,
+        22102,
+        840,
+        9749,
+        696,
+        4587,
+        8367
+      ],
+      "jev": [
+        38757,
+        672,
+        81188,
+        22102,
+        557,
+        4587,
+        8367,
+        840,
+        696,
+        9749
+      ]
+    },
+    {
+      "user_id": 606,
+      "relevant": [
+        953,
+        8355,
+        10191,
+        10653,
+        22490
+      ],
+      "prompt": "I loved: Gentlemen Prefer Blondes (1953), Slumdog Millionaire (2008), Lives of Others, The (Das leben der Anderen) (2006), Chorus, The (Choristes, Les) (2004), Best of Youth, The (La meglio giovent\u00f9) (2003), Nausica\u00e4 of the Valley of the Wind (Kaze no tani no Naushika) (1984), Princess Mononoke (Mononoke-hime) (1997), Big Night (1996). I did not enjoy: Lethal Weapon 4 (1998), Over the Top (1987), Lethal Weapon 2 (1989), Lethal Weapon 3 (1992). Recommend movies I would rate highly.",
+      "none": [
+        19908,
+        10191,
+        22490,
+        812,
+        10622,
+        10653,
+        15139,
+        3065,
+        10386,
+        400
+      ],
+      "llm_judge": [
+        10191,
+        10386,
+        812,
+        335984,
+        15139,
+        22490,
+        8355,
+        953,
+        4553,
+        10653
+      ],
+      "jev": [
+        10386,
+        10191,
+        22490,
+        812,
+        15139,
+        4553,
+        335984,
+        10653,
+        953,
+        400
+      ]
+    },
+    {
+      "user_id": 107,
+      "relevant": [
+        103,
+        4476,
+        10329,
+        11310,
+        11395
+      ],
+      "prompt": "I loved: Braveheart (1995), Shawshank Redemption, The (1994), Apollo 13 (1995), Dances with Wolves (1990), Jumanji (1995), American President, The (1995), Mr. Holland's Opus (1995), Birdcage, The (1996). Recommend movies I would rate highly.",
+      "none": [
+        850,
+        13,
+        1892,
+        855,
+        4476,
+        2118,
+        10386,
+        10403,
+        2976,
+        600
+      ],
+      "llm_judge": [
+        13,
+        10386,
+        11310,
+        2976,
+        11395,
+        850,
+        10329,
+        4476,
+        4587,
+        1892
+      ],
+      "jev": [
+        13,
+        11395,
+        10386,
+        11310,
+        2976,
+        4587,
+        850,
+        4476,
+        1892,
+        10535
+      ]
+    },
+    {
+      "user_id": 132,
+      "relevant": [
+        88,
+        194,
+        550,
+        824,
+        2108
+      ],
+      "prompt": "I loved: Beauty and the Beast (1991), Rocky Horror Picture Show, The (1975), Shawshank Redemption, The (1994), K-PAX (2001), Girl, Interrupted (1999), Love Actually (2003), Mulholland Drive (2001), Bridget Jones's Diary (2001). I did not enjoy: WALL\u00b7E (2008), Planet of the Apes (2001), Buffy the Vampire Slayer (1992), Arachnophobia (1990). Recommend movies I would rate highly.",
+      "none": [
+        24795,
+        15373,
+        602,
+        11832,
+        12560,
+        11631,
+        2108,
+        550,
+        88,
+        10868
+      ],
+      "llm_judge": [
+        194,
+        824,
+        11832,
+        88,
+        41768,
+        9087,
+        12560,
+        2108,
+        550,
+        11631
+      ],
+      "jev": [
+        824,
+        88,
+        41768,
+        194,
+        9087,
+        2108,
+        11832,
+        12560,
+        550,
+        11631
+      ]
+    },
+    {
+      "user_id": 254,
+      "relevant": [
+        100,
+        567,
+        629,
+        679,
+        18079
+      ],
+      "prompt": "I loved: Shining, The (1980), Requiem for a Dream (2000), Departed, The (2006), Fight Club (1999), Sin City (2005), Schindler's List (1993), Forrest Gump (1994), Pulp Fiction (1994). I did not enjoy: Godzilla (1998), Spider-Man (2002), Bend It Like Beckham (2002), Juror, The (1996). Recommend movies I would rate highly.",
+      "none": [
+        2084,
+        10731,
+        6038,
+        1579,
+        11184,
+        129,
+        8467,
+        679,
+        44912,
+        567
+      ],
+      "llm_judge": [
+        629,
+        275,
+        18079,
+        1579,
+        11184,
+        100,
+        567,
+        10731,
+        679,
+        2084
+      ],
+      "jev": [
+        629,
+        275,
+        18079,
+        567,
+        11184,
+        10731,
+        1579,
+        100,
+        783,
+        2084
+      ]
+    },
+    {
+      "user_id": 487,
+      "relevant": [
+        2493,
+        7326,
+        13310,
+        205596
+      ],
+      "prompt": "I loved: King's Speech, The (2010), Interstellar (2014), Rear Window (1954), Shaun of the Dead (2004), Kill Bill: Vol. 2 (2004), Donnie Darko (2001), Incredibles, The (2004), Eternal Sunshine of the Spotless Mind (2004). I did not enjoy: Bourne Identity, The (2002), Bend It Like Beckham (2002), Jurassic Park III (2001). Recommend movies I would rate highly.",
+      "none": [
+        620,
+        981,
+        13321,
+        9359,
+        9064,
+        13310,
+        73,
+        36657,
+        7326,
+        11054
+      ],
+      "llm_judge": [
+        205596,
+        73,
+        13310,
+        13321,
+        500,
+        8130,
+        620,
+        7326,
+        1945,
+        64682
+      ],
+      "jev": [
+        13310,
+        73,
+        205596,
+        500,
+        1945,
+        36685,
+        13321,
+        64682,
+        8130,
+        9064
+      ]
+    },
+    {
+      "user_id": 119,
+      "relevant": [
+        652,
+        228066,
+        244786,
+        263115,
+        307081
+      ],
+      "prompt": "I loved: Girl with the Dragon Tattoo, The (M\u00e4n som hatar kvinnor) (2009), 13 Hours (2016), Big Short, The (2015), Vacation (2015), Great Beauty, The (Grande Bellezza, La) (2013), Berlin Calling (2008), Hangover Part II, The (2011), Captain Phillips (2013). I did not enjoy: American Ultra (2015). Recommend movies I would rate highly.",
+      "none": [
+        228066,
+        9388,
+        268,
+        14709,
+        429,
+        11774,
+        36658,
+        630,
+        754,
+        652
+      ],
+      "llm_judge": [
+        9388,
+        244786,
+        5176,
+        679,
+        263115,
+        1850,
+        307081,
+        238,
+        268,
+        754
+      ],
+      "jev": [
+        9388,
+        244786,
+        238,
+        307081,
+        5176,
+        263115,
+        8860,
+        679,
+        597,
+        652
+      ]
+    },
+    {
+      "user_id": 482,
+      "relevant": [
+        163,
+        693,
+        2288,
+        9833,
+        36648
+      ],
+      "prompt": "I loved: Incredibles, The (2004), Superman (1978), Stargate (1994), Die Hard (1988), Mr. Holland's Opus (1995), Back to the Future (1985), Fifth Element, The (1997), Harry Potter and the Prisoner of Azkaban (2004). I did not enjoy: Ghost in the Shell 2: Innocence (a.k.a. Innocence) (Inosensu) (2004), Fanny and Alexander (Fanny och Alexander) (1982), Master of Disguise, The (2002), Rob Roy (1995). Recommend movies I would rate highly.",
+      "none": [
+        674,
+        374720,
+        2288,
+        29228,
+        9691,
+        15596,
+        37247,
+        163,
+        2322,
+        9387
+      ],
+      "llm_judge": [
+        812,
+        674,
+        10865,
+        49444,
+        2322,
+        1637,
+        1930,
+        9691,
+        15596,
+        36648
+      ],
+      "jev": [
+        10865,
+        1637,
+        674,
+        812,
+        1930,
+        49444,
+        9387,
+        36557,
+        2322,
+        163
+      ]
+    },
+    {
+      "user_id": 283,
+      "relevant": [
+        816,
+        3065,
+        9327,
+        9614,
+        10634
+      ],
+      "prompt": "I loved: Forrest Gump (1994), Apollo 13 (1995), Good Will Hunting (1997), Braveheart (1995), Shawshank Redemption, The (1994), Men in Black (a.k.a. MIB) (1997), Star Wars: Episode VI - Return of the Jedi (1983), Fargo (1996). I did not enjoy: Clueless (1995), Wallace & Gromit: The Wrong Trousers (1993), Full Monty, The (1997), Grosse Pointe Blank (1997). Recommend movies I would rate highly.",
+      "none": [
+        866,
+        627,
+        11184,
+        816,
+        9894,
+        8438,
+        17654,
+        9306,
+        10510,
+        3065
+      ],
+      "llm_judge": [
+        8438,
+        1710,
+        17654,
+        866,
+        801,
+        11184,
+        165,
+        9354,
+        10510,
+        9894
+      ],
+      "jev": [
+        8438,
+        1710,
+        17654,
+        11184,
+        9306,
+        866,
+        627,
+        10510,
+        165,
+        801
+      ]
+    },
+    {
+      "user_id": 455,
+      "relevant": [
+        114,
+        251,
+        858,
+        2054,
+        11318
+      ],
+      "prompt": "I loved: Schindler's List (1993), Forrest Gump (1994), Silence of the Lambs, The (1991), Shawshank Redemption, The (1994), Little Women (1994), Client, The (1994), Speed (1994), American President, The (1995). I did not enjoy: Natural Born Killers (1994), Coneheads (1993). Recommend movies I would rate highly.",
+      "none": [
+        809,
+        98,
+        218,
+        10479,
+        858,
+        10202,
+        879,
+        1443,
+        40771,
+        2054
+      ],
+      "llm_judge": [
+        2054,
+        251,
+        858,
+        11318,
+        98,
+        879,
+        13560,
+        114,
+        10479,
+        1443
+      ],
+      "jev": [
+        2054,
+        858,
+        13560,
+        251,
+        10479,
+        11318,
+        1443,
+        308,
+        114,
+        62
+      ]
+    },
+    {
+      "user_id": 466,
+      "relevant": [
+        11321,
+        11324,
+        13053,
+        49444,
+        82702
+      ],
+      "prompt": "I loved: Pursuit of Happyness, The (2006), Harry Potter and the Chamber of Secrets (2002), Harry Potter and the Sorcerer's Stone (a.k.a. Harry Potter and the Philosopher's Stone) (2001), Ocean's Eleven (2001), Up (2009), Forrest Gump (1994), Edge of Tomorrow (2014), The Butterfly Effect (2004). I did not enjoy: Star Wars: Episode IV - A New Hope (1977), Charlie and the Chocolate Factory (2005), Slumdog Millionaire (2008). Recommend movies I would rate highly.",
+      "none": [
+        10539,
+        9947,
+        11368,
+        13053,
+        82702,
+        941,
+        577,
+        49444,
+        87,
+        226
+      ],
+      "llm_judge": [
+        13053,
+        82702,
+        49444,
+        8587,
+        771,
+        10539,
+        11321,
+        11086,
+        164,
+        9947
+      ],
+      "jev": [
+        8587,
+        82702,
+        49444,
+        13053,
+        11086,
+        11321,
+        10539,
+        4584,
+        9947,
+        771
+      ]
+    },
+    {
+      "user_id": 117,
+      "relevant": [
+        433,
+        623,
+        9304,
+        10779,
+        11224
+      ],
+      "prompt": "I loved: Man Without a Face, The (1993), Schindler's List (1993), Braveheart (1995), Shawshank Redemption, The (1994), Silence of the Lambs, The (1991), Othello (1995), Richard III (1995), Three Musketeers, The (1993). I did not enjoy: Ace Ventura: Pet Detective (1994), Dumb & Dumber (Dumb and Dumber) (1994), Natural Born Killers (1994), Ace Ventura: When Nature Calls (1995). Recommend movies I would rate highly.",
+      "none": [
+        20352,
+        8413,
+        11224,
+        10779,
+        15144,
+        766,
+        623,
+        11232,
+        9304,
+        11314
+      ],
+      "llm_judge": [
+        10858,
+        8413,
+        104,
+        2501,
+        121,
+        20352,
+        11232,
+        11314,
+        824,
+        10779
+      ],
+      "jev": [
+        10858,
+        104,
+        2501,
+        121,
+        824,
+        500,
+        11314,
+        87,
+        8413,
+        11232
+      ]
+    },
+    {
+      "user_id": 313,
+      "relevant": [
+        855,
+        9401,
+        9434,
+        9611,
+        9844
+      ],
+      "prompt": "I loved: Clerks (1994), Heathers (1989), There's Something About Mary (1998), Harold and Maude (1971), Bottle Rocket (1996), Raising Arizona (1987), Waiting for Guffman (1996), Fight Club (1999). I did not enjoy: Back to the Future Part II (1989), Close Encounters of the Third Kind (1977), Alien: Resurrection (1997), Screamers (1995). Recommend movies I would rate highly.",
+      "none": [
+        9837,
+        11688,
+        1497,
+        22970,
+        18462,
+        38,
+        23631,
+        14447,
+        9308,
+        9844
+      ],
+      "llm_judge": [
+        9401,
+        9434,
+        9844,
+        40807,
+        9308,
+        9611,
+        9398,
+        14447,
+        11688,
+        8055
+      ],
+      "jev": [
+        9844,
+        9401,
+        9611,
+        40807,
+        1584,
+        9308,
+        14447,
+        9398,
+        8055,
+        9434
+      ]
+    },
+    {
+      "user_id": 314,
+      "relevant": [
+        11,
+        75,
+        137,
+        629,
+        8866
+      ],
+      "prompt": "I loved: 2001: A Space Odyssey (1968), Courage Under Fire (1996), Much Ado About Nothing (1993), Schindler's List (1993), Shawshank Redemption, The (1994), American President, The (1995), Terminator 2: Judgment Day (1991), Mr. Holland's Opus (1995). I did not enjoy: Pulp Fiction (1994), Drop Zone (1994), Cliffhanger (1993), Seven (a.k.a. Se7en) (1995). Recommend movies I would rate highly.",
+      "none": [
+        35791,
+        8866,
+        773,
+        1734,
+        1894,
+        75,
+        254,
+        51497,
+        137,
+        9536
+      ],
+      "llm_judge": [
+        137,
+        105,
+        129,
+        11,
+        8866,
+        9919,
+        773,
+        10377,
+        1894,
+        11529
+      ],
+      "jev": [
+        137,
+        11,
+        773,
+        10377,
+        8866,
+        105,
+        129,
+        1894,
+        11529,
+        9919
+      ]
+    },
+    {
+      "user_id": 458,
+      "relevant": [
+        251,
+        8844,
+        9603,
+        11566,
+        11777
+      ],
+      "prompt": "I loved: Now and Then (1995), Walk in the Clouds, A (1995), Circle of Friends (1995), In the Line of Fire (1993), Murder in the First (1995), Disclosure (1994), Sleepless in Seattle (1993), Mr. Holland's Opus (1995). I did not enjoy: Dances with Wolves (1990), Willy Wonka & the Chocolate Factory (1971). Recommend movies I would rate highly.",
+      "none": [
+        641,
+        510,
+        1552,
+        11777,
+        11566,
+        81188,
+        251,
+        3472,
+        16320,
+        1599
+      ],
+      "llm_judge": [
+        8197,
+        921,
+        9603,
+        3472,
+        11777,
+        510,
+        1552,
+        4348,
+        10220,
+        745
+      ],
+      "jev": [
+        8197,
+        10220,
+        4348,
+        921,
+        3472,
+        510,
+        10707,
+        11777,
+        1573,
+        745
+      ]
+    },
+    {
+      "user_id": 304,
+      "relevant": [
+        114,
+        400,
+        926,
+        2112,
+        3598
+      ],
+      "prompt": "I loved: Toy Story 2 (1999), Anna and the King (1999), Star Wars: Episode I - The Phantom Menace (1999), October Sky (1999), Star Trek: Insurrection (1998), How to Make an American Quilt (1995), Scream (1996), Saving Private Ryan (1998). I did not enjoy: Rumble in the Bronx (Hont faan kui) (1995), Dead Man Walking (1995), Mrs. Doubtfire (1993), Natural Born Killers (1994). Recommend movies I would rate highly.",
+      "none": [
+        672,
+        3598,
+        343,
+        9273,
+        6977,
+        9473,
+        8007,
+        926,
+        8741,
+        62177
+      ],
+      "llm_judge": [
+        8007,
+        62177,
+        926,
+        672,
+        3598,
+        646,
+        9679,
+        10625,
+        114,
+        10201
+      ],
+      "jev": [
+        926,
+        62177,
+        672,
+        3598,
+        114,
+        8007,
+        646,
+        8741,
+        10625,
+        1632
+      ]
+    },
+    {
+      "user_id": 472,
+      "relevant": [
+        240,
+        278,
+        510,
+        1930,
+        49026
+      ],
+      "prompt": "I loved: Usual Suspects, The (1995), Godfather, The (1972), Departed, The (2006), Dark Knight, The (2008), River Runs Through It, A (1992), Grumpy Old Men (1993), Christmas Vacation (National Lampoon's Christmas Vacation) (1989), Lord of the Rings: The Two Towers, The (2002). I did not enjoy: Memento (2000). Recommend movies I would rate highly.",
+      "none": [
+        752,
+        36955,
+        11,
+        22538,
+        1930,
+        1408,
+        36668,
+        544,
+        2118,
+        176
+      ],
+      "llm_judge": [
+        2118,
+        49026,
+        240,
+        278,
+        8978,
+        510,
+        2503,
+        274,
+        4614,
+        36955
+      ],
+      "jev": [
+        49026,
+        278,
+        274,
+        36955,
+        8978,
+        4614,
+        11,
+        510,
+        2503,
+        1408
+      ]
+    },
+    {
+      "user_id": 75,
+      "relevant": [
+        85,
+        89,
+        218,
+        938,
+        1891
+      ],
+      "prompt": "I loved: Star Wars: Episode IV - A New Hope (1977), Jungle Book, The (1967), Lord of the Rings: The Fellowship of the Ring, The (2001), Terminator 2: Judgment Day (1991), V for Vendetta (2006), Driving Miss Daisy (1989), Rebecca (1940), Alien (1979). I did not enjoy: Star Wars: Episode III - Revenge of the Sith (2005), Coneheads (1993), Star Wars: Episode I - The Phantom Menace (1999), Matrix, The (1999). Recommend movies I would rate highly.",
+      "none": [
+        15413,
+        483,
+        68718,
+        22,
+        218,
+        938,
+        9070,
+        1547,
+        11382,
+        424
+      ],
+      "llm_judge": [
+        85,
+        424,
+        1891,
+        218,
+        89,
+        8984,
+        68718,
+        938,
+        22,
+        1547
+      ],
+      "jev": [
+        1891,
+        218,
+        85,
+        89,
+        424,
+        938,
+        8984,
+        483,
+        68718,
+        22
+      ]
+    },
+    {
+      "user_id": 280,
+      "relevant": [
+        5915,
+        15472,
+        59436,
+        65057,
+        83666
+      ],
+      "prompt": "I loved: The Hunger Games (2012), Perks of Being a Wallflower, The (2012), Pride & Prejudice (2005), Blow (2001), Blind Side, The  (2009), Remember the Titans (2000), Almost Famous (2000), Bridesmaids (2011). I did not enjoy: Spy Kids (2001), Dictator, The (2012), Deuce Bigalow: Male Gigolo (1999), Taking Woodstock (2009). Recommend movies I would rate highly.",
+      "none": [
+        10328,
+        8367,
+        6479,
+        1771,
+        348,
+        319,
+        453,
+        59436,
+        15472,
+        65057
+      ],
+      "llm_judge": [
+        453,
+        5915,
+        6972,
+        65057,
+        1771,
+        6479,
+        59436,
+        83666,
+        1945,
+        967
+      ],
+      "jev": [
+        5915,
+        453,
+        6972,
+        65057,
+        83666,
+        967,
+        6479,
+        15472,
+        8367,
+        1771
+      ]
+    },
+    {
+      "user_id": 269,
+      "relevant": [
+        627,
+        3595,
+        9100,
+        11674,
+        20927
+      ],
+      "prompt": "I loved: Heat (1995), Toy Story (1995), Leaving Las Vegas (1995), Hunchback of Notre Dame, The (1996), Willy Wonka & the Chocolate Factory (1971), Grumpier Old Men (1995), Rock, The (1996), Twelve Monkeys (a.k.a. 12 Monkeys) (1995). Recommend movies I would rate highly.",
+      "none": [
+        11674,
+        9994,
+        4964,
+        161,
+        627,
+        2675,
+        1858,
+        9377,
+        1624,
+        782
+      ],
+      "llm_judge": [
+        2898,
+        78,
+        782,
+        161,
+        3595,
+        9994,
+        913,
+        11674,
+        1844,
+        9377
+      ],
+      "jev": [
+        3595,
+        782,
+        161,
+        913,
+        9994,
+        78,
+        11674,
+        1624,
+        2898,
+        1844
+      ]
+    },
+    {
+      "user_id": 138,
+      "relevant": [
+        146,
+        1729,
+        9502,
+        11230,
+        12207
+      ],
+      "prompt": "I loved: Philadelphia Story, The (1940), 20,000 Leagues Under the Sea (1954), Circle of Friends (1995), Gods Must Be Crazy, The (1980), Aristocats, The (1970), Escape from L.A. (1996), Last Emperor, The (1987). I did not enjoy: Wild Things (1998), Arlington Road (1999), Thin Red Line, The (1998), Hamlet (1996). Recommend movies I would rate highly.",
+      "none": [
+        9607,
+        2291,
+        12207,
+        154,
+        4107,
+        658,
+        36955,
+        8866,
+        2024,
+        11230
+      ],
+      "llm_judge": [
+        10515,
+        16520,
+        146,
+        9502,
+        235,
+        1729,
+        12207,
+        8866,
+        11230,
+        11862
+      ],
+      "jev": [
+        10515,
+        16520,
+        9502,
+        8866,
+        9607,
+        12207,
+        11230,
+        11862,
+        1729,
+        235
+      ]
+    },
+    {
+      "user_id": 500,
+      "relevant": [
+        808,
+        812,
+        856,
+        9473,
+        9487
+      ],
+      "prompt": "I loved: Wag the Dog (1997), Delicatessen (1991), Lock, Stock & Two Smoking Barrels (1998), As Good as It Gets (1997), Toy Story 2 (1999), Living in Oblivion (1995), Being John Malkovich (1999), American Beauty (1999). I did not enjoy: Child's Play 3 (1991), Clueless (1995), Homegrown (1998), Heart and Souls (1993). Recommend movies I would rate highly.",
+      "none": [
+        2110,
+        14741,
+        324786,
+        24428,
+        6280,
+        935,
+        1092,
+        562,
+        12100,
+        856
+      ],
+      "llm_judge": [
+        935,
+        2657,
+        9473,
+        9487,
+        562,
+        489,
+        6280,
+        526,
+        808,
+        14741
+      ],
+      "jev": [
+        935,
+        9473,
+        489,
+        8388,
+        2110,
+        1092,
+        856,
+        6280,
+        14741,
+        2657
+      ]
+    },
+    {
+      "user_id": 319,
+      "relevant": [
+        289,
+        27205,
+        209112,
+        244786,
+        281957
+      ],
+      "prompt": "I loved: Aladdin (1992), Tarzan (1999), Lion King, The (1994), L\u00e9on: The Professional (a.k.a. The Professional) (L\u00e9on) (1994), Godfather: Part II, The (1974), WALL\u00b7E (2008), Godfather, The (1972), Interstellar (2014). Recommend movies I would rate highly.",
+      "none": [
+        1909,
+        107,
+        11499,
+        11090,
+        2493,
+        9614,
+        289,
+        10802,
+        244786,
+        22538
+      ],
+      "llm_judge": [
+        10191,
+        27205,
+        281957,
+        244786,
+        245,
+        289,
+        11499,
+        10586,
+        2493,
+        1852
+      ],
+      "jev": [
+        10191,
+        27205,
+        2493,
+        281957,
+        10586,
+        244786,
+        1852,
+        11499,
+        289,
+        9359
+      ]
+    },
+    {
+      "user_id": 528,
+      "relevant": [
+        218,
+        388,
+        568,
+        2501,
+        60308
+      ],
+      "prompt": "I loved: Die Hard (1988), Gladiator (2000), Elite Squad: The Enemy Within (Tropa de Elite 2 - O Inimigo Agora \u00c9 Outro) (2010), Snatch (2000), Good Will Hunting (1997), Forrest Gump (1994), Braveheart (1995), Matrix, The (1999). I did not enjoy: Five-Year Engagement, The (2012), Babylon 5, Gone Baby Gone (2007), Cheaper by the Dozen 2 (2005). Recommend movies I would rate highly.",
+      "none": [
+        14347,
+        9835,
+        674,
+        1701,
+        9359,
+        218,
+        71,
+        140823,
+        339403,
+        10393
+      ],
+      "llm_judge": [
+        388,
+        2501,
+        278,
+        218,
+        568,
+        339403,
+        1701,
+        71,
+        60308,
+        22
+      ],
+      "jev": [
+        1701,
+        218,
+        339403,
+        388,
+        2501,
+        278,
+        568,
+        400,
+        22,
+        60308
+      ]
+    },
+    {
+      "user_id": 435,
+      "relevant": [
+        24,
+        38,
+        98,
+        107,
+        393
+      ],
+      "prompt": "I loved: Departed, The (2006), Prestige, The (2006), Slumdog Millionaire (2008), Fight Club (1999), Dark Knight, The (2008), Godfather: Part II, The (1974), Godfather, The (1972), Shawshank Redemption, The (1994). Recommend movies I would rate highly.",
+      "none": [
+        607,
+        3086,
+        285,
+        297,
+        12106,
+        107,
+        98,
+        38,
+        809,
+        6479
+      ],
+      "llm_judge": [
+        4982,
+        426,
+        38,
+        98,
+        6479,
+        24,
+        393,
+        107,
+        8843,
+        12106
+      ],
+      "jev": [
+        4982,
+        426,
+        393,
+        24,
+        98,
+        6479,
+        1573,
+        107,
+        12106,
+        38
+      ]
+    },
+    {
+      "user_id": 292,
+      "relevant": [
+        3034,
+        6637,
+        10377,
+        75656,
+        177572
+      ],
+      "prompt": "I loved: Iron Giant, The (1999), Shawshank Redemption, The (1994), Babes in Toyland (1934), Diamonds Are Forever (1971), The Hunger Games: Catching Fire (2013), The Hunger Games: Mockingjay - Part 1 (2014), Guardians of the Galaxy (2014), Sherlock Holmes: A Game of Shadows (2011). I did not enjoy: Allan Quatermain and the Lost City of Gold (1987), Blair Witch Project, The (1999), Wild (2014), Anaconda (1997). Recommend movies I would rate highly.",
+      "none": [
+        559,
+        6637,
+        9683,
+        4584,
+        9567,
+        10510,
+        492,
+        6114,
+        9631,
+        496
+      ],
+      "llm_judge": [
+        177572,
+        6637,
+        568,
+        10377,
+        75656,
+        3034,
+        492,
+        3580,
+        10510,
+        559
+      ],
+      "jev": [
+        177572,
+        6637,
+        559,
+        75656,
+        10510,
+        10377,
+        492,
+        9631,
+        3034,
+        9932
+      ]
+    },
+    {
+      "user_id": 429,
+      "relevant": [
+        2064,
+        2636,
+        10449,
+        11395,
+        36955
+      ],
+      "prompt": "I loved: Apollo 13 (1995), Crimson Tide (1995), Aladdin (1992), Dances with Wolves (1990), Batman (1989), Beauty and the Beast (1991), Copycat (1995), Die Hard: With a Vengeance (1995). I did not enjoy: Beverly Hills Cop III (1994). Recommend movies I would rate highly.",
+      "none": [
+        11395,
+        3082,
+        39452,
+        1738,
+        9835,
+        492,
+        8358,
+        13597,
+        755,
+        2064
+      ],
+      "llm_judge": [
+        8587,
+        8358,
+        2649,
+        36955,
+        15658,
+        755,
+        13597,
+        1738,
+        2636,
+        9277
+      ],
+      "jev": [
+        2636,
+        36955,
+        2649,
+        8358,
+        8587,
+        755,
+        1738,
+        15658,
+        13597,
+        10449
+      ]
+    },
+    {
+      "user_id": 22,
+      "relevant": [
+        98,
+        1999,
+        7443,
+        10873,
+        36557
+      ],
+      "prompt": "I loved: Kill Bill: Vol. 2 (2004), One Flew Over the Cuckoo's Nest (1975), Forrest Gump (1994), Blade Runner (1982), Shawshank Redemption, The (1994), Hook (1991), Midnight Cowboy (1969), Mulholland Drive (2001). I did not enjoy: Negotiator, The (1998), Alice in Wonderland (2010), Slumdog Millionaire (2008), Requiem for a Dream (2000). Recommend movies I would rate highly.",
+      "none": [
+        7443,
+        411,
+        36557,
+        15121,
+        73,
+        1572,
+        11860,
+        544,
+        98,
+        197
+      ],
+      "llm_judge": [
+        68,
+        73,
+        1999,
+        10873,
+        197,
+        98,
+        321697,
+        6978,
+        11353,
+        36557
+      ],
+      "jev": [
+        68,
+        73,
+        1999,
+        10873,
+        98,
+        321697,
+        197,
+        7191,
+        602,
+        11860
+      ]
+    },
+    {
+      "user_id": 139,
+      "relevant": [
+        853,
+        13183,
+        49026,
+        49051,
+        57158
+      ],
+      "prompt": "I loved: Serenity (2005), Patriot, The (2000), Star Wars: Episode VII - The Force Awakens (2015), Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark) (1981), Star Wars: Episode IV - A New Hope (1977), Lord of the Rings: The Return of the King, The (2003), Lord of the Rings: The Two Towers, The (2002), Lord of the Rings: The Fellowship of the Ring, The (2001). I did not enjoy: District 9 (2009), Vanilla Sky (2001), Ace Ventura: When Nature Calls (1995), Shaun of the Dead (2004). Recommend movies I would rate highly.",
+      "none": [
+        13183,
+        1878,
+        9802,
+        1891,
+        49026,
+        10328,
+        380,
+        63,
+        826,
+        49051
+      ],
+      "llm_judge": [
+        1891,
+        49051,
+        57158,
+        49026,
+        9476,
+        601,
+        853,
+        826,
+        9802,
+        13183
+      ],
+      "jev": [
+        1891,
+        57158,
+        49051,
+        9802,
+        601,
+        853,
+        49026,
+        826,
+        13183,
+        9476
+      ]
+    },
+    {
+      "user_id": 212,
+      "relevant": [
+        15472,
+        37137,
+        316029,
+        399174,
+        458423
+      ],
+      "prompt": "I loved: Three Billboards Outside Ebbing, Missouri (2017), Emperor's New Groove, The (2000), Gifted (2017), Monty Python's Life of Brian (1979), Fantastic Beasts and Where to Find Them (2016), Death Proof (2007), Naked Gun: From the Files of Police Squad!, The (1988), Thor: Ragnarok (2017). I did not enjoy: Nightmare on Elm Street, A (1984), Independence Day (a.k.a. ID4) (1996), Maze Runner, The (2014), Ted 2 (2015). Recommend movies I would rate highly.",
+      "none": [
+        10720,
+        458423,
+        2493,
+        399174,
+        4954,
+        9894,
+        37137,
+        9923,
+        348,
+        252
+      ],
+      "llm_judge": [
+        2493,
+        399174,
+        37137,
+        252,
+        11977,
+        10720,
+        9294,
+        1677,
+        58574,
+        9894
+      ],
+      "jev": [
+        37137,
+        2493,
+        399174,
+        252,
+        10720,
+        9294,
+        11977,
+        458423,
+        316029,
+        1677
+      ]
+    },
+    {
+      "user_id": 287,
+      "relevant": [
+        226,
+        473,
+        902,
+        9451,
+        13403
+      ],
+      "prompt": "I loved: Mighty Wind, A (2003), Royal Tenenbaums, The (2001), American Splendor (2003), Sideways (2004), Heavenly Creatures (1994), Amelie (Fabuleux destin d'Am\u00e9lie Poulain, Le) (2001), Punch-Drunk Love (2002), Hours, The (2002). I did not enjoy: Liar Liar (1997), Grease (1978), City Slickers II: The Legend of Curly's Gold (1994), Star Trek VI: The Undiscovered Country (1991). Recommend movies I would rate highly.",
+      "none": [
+        13403,
+        10061,
+        9451,
+        10663,
+        10154,
+        77,
+        9331,
+        9277,
+        9374,
+        8963
+      ],
+      "llm_judge": [
+        226,
+        9451,
+        77,
+        473,
+        902,
+        9427,
+        627,
+        8963,
+        949,
+        9277
+      ],
+      "jev": [
+        226,
+        9451,
+        627,
+        473,
+        77,
+        9277,
+        949,
+        9879,
+        9427,
+        10154
+      ]
+    },
+    {
+      "user_id": 610,
+      "relevant": [
+        755,
+        9003,
+        9638,
+        11879,
+        13220
+      ],
+      "prompt": "I loved: Get Out (2017), Time Bandits (1981), Labyrinth (1986), Malcolm X (1992), Do the Right Thing (1989), Heat (1995), Graduate, The (1967), Blue Velvet (1986). I did not enjoy: Crow, The: Wicked Prayer (2005), Bloodsport: The Dark Kumite (1999), Derailed (2002), Who's That Knocking at My Door? (1967). Recommend movies I would rate highly.",
+      "none": [
+        10276,
+        9638,
+        8850,
+        568,
+        755,
+        880,
+        1887,
+        2671,
+        21849,
+        185
+      ],
+      "llm_judge": [
+        185,
+        21849,
+        11322,
+        880,
+        568,
+        9450,
+        755,
+        9003,
+        1887,
+        11879
+      ],
+      "jev": [
+        185,
+        11879,
+        9003,
+        11322,
+        21849,
+        9638,
+        1887,
+        2671,
+        21991,
+        880
+      ]
+    },
+    {
+      "user_id": 19,
+      "relevant": [
+        567,
+        963,
+        8067,
+        9495,
+        18561
+      ],
+      "prompt": "I loved: Terminator 2: Judgment Day (1991), Vertigo (1958), Star Trek II: The Wrath of Khan (1982), Batman (1989), Indiana Jones and the Last Crusade (1989), Raiders of the Lost Ark (Indiana Jones and the Raiders of the Lost Ark) (1981), E.T. the Extra-Terrestrial (1982), Who Framed Roger Rabbit? (1988). I did not enjoy: Hollow Man (2000), Scary Movie (2000), Talented Mr. Ripley, The (1999), Eye of the Beholder (1999). Recommend movies I would rate highly.",
+      "none": [
+        238,
+        58,
+        872,
+        9409,
+        10802,
+        744,
+        77,
+        8067,
+        141,
+        36658
+      ],
+      "llm_judge": [
+        58,
+        567,
+        36658,
+        756,
+        9495,
+        963,
+        744,
+        8067,
+        9409,
+        8358
+      ],
+      "jev": [
+        36658,
+        744,
+        58,
+        756,
+        8358,
+        963,
+        9495,
+        567,
+        9454,
+        9409
+      ]
+    },
+    {
+      "user_id": 201,
+      "relevant": [
+        861,
+        9354,
+        9426,
+        9612,
+        10329
+      ],
+      "prompt": "I loved: E.T. the Extra-Terrestrial (1982), Terminator 2: Judgment Day (1991), Terminator, The (1984), Contact (1997), Jurassic Park (1993), X-Files: Fight the Future, The (1998), Ghost (1990), Star Wars: Episode VI - Return of the Jedi (1983). I did not enjoy: Runaway Bride (1999), How to Make an American Quilt (1995), Dark City (1998), Batman Returns (1992). Recommend movies I would rate highly.",
+      "none": [
+        808,
+        11092,
+        9426,
+        10329,
+        9388,
+        861,
+        11543,
+        49047,
+        39938,
+        9354
+      ],
+      "llm_judge": [
+        49047,
+        9354,
+        861,
+        10329,
+        9386,
+        957,
+        9426,
+        27022,
+        9612,
+        11092
+      ],
+      "jev": [
+        861,
+        10329,
+        9354,
+        49047,
+        27022,
+        957,
+        9426,
+        9612,
+        9386,
+        15370
+      ]
+    },
+    {
+      "user_id": 97,
+      "relevant": [
+        161,
+        603,
+        1637,
+        1894,
+        8870
+      ],
+      "prompt": "I loved: Shrek (2001), Mummy Returns, The (2001), Cast Away (2000), Lord of the Rings: The Fellowship of the Ring, The (2001), Mexican, The (2001), Mission: Impossible II (2000), X-Men (2000), Crouching Tiger, Hidden Dragon (Wo hu cang long) (2000). I did not enjoy: Rain Man (1988). Recommend movies I would rate highly.",
+      "none": [
+        8844,
+        603,
+        1894,
+        1637,
+        9740,
+        8374,
+        8467,
+        1368,
+        161,
+        279
+      ],
+      "llm_judge": [
+        603,
+        8844,
+        161,
+        1637,
+        13475,
+        1894,
+        435,
+        8870,
+        193,
+        8374
+      ],
+      "jev": [
+        1894,
+        603,
+        1637,
+        13475,
+        8374,
+        8844,
+        8870,
+        435,
+        161,
+        193
+      ]
+    },
+    {
+      "user_id": 180,
+      "relevant": [
+        11,
+        85,
+        120,
+        550,
+        769
+      ],
+      "prompt": "I loved: Princess Bride, The (1987), Monty Python and the Holy Grail (1975), Star Wars: Episode V - The Empire Strikes Back (1980), Evil Dead II (Dead by Dawn) (1987), Ghostbusters II (1989), Iron Giant, The (1999), Caddyshack (1980). I did not enjoy: Dark Crystal, The (1982), Kingpin (1996). Recommend movies I would rate highly.",
+      "none": [
+        629,
+        1597,
+        64690,
+        10634,
+        197,
+        10674,
+        120,
+        8487,
+        85,
+        107
+      ],
+      "llm_judge": [
+        11,
+        85,
+        1597,
+        10674,
+        107,
+        157,
+        120,
+        10195,
+        8487,
+        197
+      ],
+      "jev": [
+        11,
+        8487,
+        85,
+        10674,
+        157,
+        120,
+        107,
+        1597,
+        10195,
+        755
+      ]
+    },
+    {
+      "user_id": 330,
+      "relevant": [
+        747,
+        923,
+        1433,
+        12149,
+        19908
+      ],
+      "prompt": "I loved: Mars Attacks! (1996), Rocky Horror Picture Show, The (1975), True Romance (1993), Eyes Wide Shut (1999), Kill Bill: Vol. 2 (2004), Tombstone (1993), Dogma (1999), Cast Away (2000). I did not enjoy: Ace Ventura: Pet Detective (1994), Speed (1994), Nutty Professor, The (1996), Happy Gilmore (1996). Recommend movies I would rate highly.",
+      "none": [
+        9659,
+        1433,
+        10622,
+        9586,
+        5175,
+        1726,
+        1948,
+        435,
+        8355,
+        923
+      ],
+      "llm_judge": [
+        364,
+        923,
+        12149,
+        1433,
+        9659,
+        128,
+        747,
+        9586,
+        19908,
+        1726
+      ],
+      "jev": [
+        12149,
+        1433,
+        923,
+        128,
+        9586,
+        364,
+        9659,
+        747,
+        639,
+        1948
+      ]
+    },
+    {
+      "user_id": 63,
+      "relevant": [
+        217,
+        389,
+        36557,
+        74643,
+        109445
+      ],
+      "prompt": "I loved: Dylan Moran: Monster (2004), Wreck-It Ralph (2012), Monty Python Live at the Hollywood Bowl (1982), Tinker Tailor Soldier Spy (2011), The Lego Movie (2014), Grand Day Out with Wallace and Gromit, A (1989), Wallace & Gromit: A Close Shave (1995), Wallace & Gromit: The Wrong Trousers (1993). I did not enjoy: Big Lebowski, The (1998), The Hunger Games: Catching Fire (2013), The Hunger Games (2012), Spider-Man (2002). Recommend movies I would rate highly.",
+      "none": [
+        10184,
+        4476,
+        10191,
+        3604,
+        306,
+        5503,
+        36557,
+        10412,
+        10545,
+        26564
+      ],
+      "llm_judge": [
+        36557,
+        3604,
+        109445,
+        10191,
+        389,
+        306,
+        26564,
+        10184,
+        10869,
+        217
+      ],
+      "jev": [
+        10191,
+        109445,
+        109414,
+        10545,
+        3604,
+        6471,
+        2928,
+        74643,
+        10869,
+        36557
+      ]
+    },
+    {
+      "user_id": 334,
+      "relevant": [
+        98,
+        10191,
+        11621,
+        18785,
+        25719
+      ],
+      "prompt": "I loved: Shrek (2001), Fantastic Mr. Fox (2009), Hunt for Red October, The (1990), Terminator 2: Judgment Day (1991), Being John Malkovich (1999), Fifth Element, The (1997), O Brother, Where Art Thou? (2000), Corpse Bride (2005). I did not enjoy: Saw (2004), Ringu (Ring) (1998), Insider, The (1999), Ace Ventura: Pet Detective (1994). Recommend movies I would rate highly.",
+      "none": [
+        64688,
+        2114,
+        1934,
+        4824,
+        16869,
+        62211,
+        15765,
+        5528,
+        11551,
+        927
+      ],
+      "llm_judge": [
+        11621,
+        10191,
+        2114,
+        425,
+        62211,
+        1934,
+        25719,
+        11551,
+        4824,
+        10872
+      ],
+      "jev": [
+        11621,
+        10191,
+        2114,
+        11551,
+        62211,
+        4824,
+        425,
+        25719,
+        865,
+        10872
+      ]
+    },
+    {
+      "user_id": 248,
+      "relevant": [
+        9806,
+        282758,
+        315623,
+        335209
+      ],
+      "prompt": "I loved: Deadpool (2016), Deadpool 2 (2018), Limitless (2011), WALL\u00b7E (2008), Now You See Me 2 (2016), Now You See Me (2013), Ice Age (2002), Pirates of the Caribbean: At World's End (2007). I did not enjoy: Coco (2017). Recommend movies I would rate highly.",
+      "none": [
+        282758,
+        330,
+        319,
+        963,
+        9471,
+        335209,
+        2155,
+        1817,
+        5137,
+        10400
+      ],
+      "llm_judge": [
+        9806,
+        817,
+        105,
+        9471,
+        35,
+        282758,
+        335209,
+        1817,
+        2155,
+        5137
+      ],
+      "jev": [
+        9471,
+        817,
+        9806,
+        5137,
+        330,
+        105,
+        2155,
+        282758,
+        35,
+        319
+      ]
+    },
+    {
+      "user_id": 496,
+      "relevant": [
+        120,
+        121,
+        122,
+        155,
+        120467
+      ],
+      "prompt": "I loved: Godfather, The (1972), Rear Window (1954), Casablanca (1942), Her (2013), Godfather: Part II, The (1974), Mis\u00e9rables, Les (2012), Jason and the Argonauts (1963), Rent (2005). I did not enjoy: Wallace & Gromit: The Best of Aardman Animation (1996), Blue Lagoon, The (1980), King Arthur (2004). Recommend movies I would rate highly.",
+      "none": [
+        122,
+        9804,
+        155,
+        1913,
+        8839,
+        121,
+        710,
+        19101,
+        120,
+        816
+      ],
+      "llm_judge": [
+        155,
+        1913,
+        9798,
+        39452,
+        710,
+        120467,
+        120,
+        122,
+        121,
+        5876
+      ],
+      "jev": [
+        155,
+        9798,
+        1913,
+        5876,
+        710,
+        39452,
+        109,
+        122,
+        121,
+        120
+      ]
+    }
+  ],
+  "wall_s": 1186.6,
+  "llm_cache": {
+    "hits": 4,
+    "misses": 1048
+  }
+}

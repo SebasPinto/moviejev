@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class TasteProfile(BaseModel):
@@ -12,6 +12,21 @@ class TasteProfile(BaseModel):
     tone: str = Field(default="", max_length=120)
     exclusions: list[str] = Field(default_factory=list, max_length=10)
     era: str = Field(default="", max_length=60)
+
+    @field_validator("liked_titles", "genres", "themes", "exclusions", "tone", "era", mode="before")
+    @classmethod
+    def _clip(cls, v: object, info: object) -> object:
+        # LLMs overrun length hints; clipping keeps the bound without losing the request.
+        limits = {
+            "liked_titles": 10,
+            "genres": 8,
+            "themes": 8,
+            "exclusions": 10,
+            "tone": 120,
+            "era": 60,
+        }
+        name = getattr(info, "field_name", "")
+        return v[: limits[name]] if isinstance(v, (str, list)) and name in limits else v
 
     def as_state(self) -> str:
         parts = []
