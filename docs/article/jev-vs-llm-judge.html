@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Saving Money by Using Jev as the Judge in a Movie Recommender</title>
+<style>
+ body{max-width:720px;margin:40px auto;padding:0 16px;font-family:Georgia,serif;font-size:19px;line-height:1.6;color:#222;background:#fff}
+ h2{font-family:system-ui,sans-serif;margin-top:2em} h3{font-family:system-ui,sans-serif}
+ img{max-width:100%;height:auto;display:block;margin:1.5em auto} code{font-size:0.85em}
+</style></head><body>
+<h1>Saving Money by Using Jev as the Judge in a Movie Recommender</h1>
+<p><em>A reproducible test of TypeSafe AI's Jev as a reranker, against Claude as a judge, on real MovieLens users.</em></p>
+<p><em>This article was written by me and enhanced with AI.</em></p>
+<hr />
+<p><strong>TL;DR.</strong> I built a movie recommender where a large language model proposes candidates and a second model grades them against your taste. For the grading step I compared Jev, a small model from TypeSafe AI that only answers typed questions and costs $0.042 per million tokens, against Claude Sonnet 4.6 acting as a judge, on 50 real MovieLens users with their actual later ratings as ground truth. Ranking quality was a statistical tie: Jev matched the LLM judge on the standard metrics and beat it on whether the first recommendation was a hit. Jev did it 59 times cheaper and 11 times faster. Code, protocol and raw results are public.</p>
+<hr />
+<p>Most LLM products have a step where the model is asked to grade something. Rank these candidates. Pick the best of five drafts. Decide whether this answer violates a rule. That step is usually done by calling the same large language model again with a "you are a strict judge" prompt, parsing its answer, and hoping it was consistent.</p>
+<p>It works, but it is slow and it is expensive, and the model gives you a number with no honest sense of how sure it is.</p>
+<p>I wanted to know whether a model built specifically for that grading step could do the job. So I built a small movie recommender, put the grading step behind an interface, and ran the same evaluation against three implementations: a purpose-built scoring model called Jev, a Claude model acting as judge, and random order as a floor.</p>
+<p>This article walks through what Jev is, how the recommender uses it, how the evaluation works, and what the numbers say. Everything is open: the code, the protocol, the raw results.</p>
+<h2>What Jev is</h2>
+<p>Jev is the first model from TypeSafe AI. They call it a "System One" model, after the fast, intuitive mode of thinking in Kahneman's <em>Thinking, Fast and Slow</em>. The name is a good summary of the design. Jev does not generate text. It does not chat. You give it a block of text they call the <em>state</em>, and you ask it typed questions about that text. It returns typed answers.</p>
+<p>There are three question types:</p>
+<ul>
+<li><strong>Score.</strong> You give an ordered list of levels, for example five sentences from "clearly a poor match" to "near-perfect match". Jev returns a probability for each level, plus a confidence.</li>
+<li><strong>Choice.</strong> You give a set of labeled options. Jev returns the chosen label, a confidence, and the probability of each option.</li>
+<li><strong>Noul.</strong> You give a single statement. Jev returns the probability that the statement holds for the state, as a number between 0 and 1.</li>
+</ul>
+<p>The interesting word in that description is <em>probability</em>. A text LLM asked "rate this 0 to 4" writes a digit. Jev returns a distribution over the levels, and TypeSafe claims that distribution is calibrated. Calibrated means that when the model says 70 percent, it is right about 70 percent of the time. That is a very different thing from a digit.</p>
+<p>The other interesting number is the price. Jev is listed at $0.042 per million input tokens. A token is roughly three quarters of a word. For comparison, Claude Haiku 4.5, the cheapest current Claude model, lists at $1.00 per million input tokens. Claude Sonnet 4.6, the model I used as the judge, is $3.00.</p>
+<p><img alt="Price per million input tokens" src="https://raw.githubusercontent.com/SebasPinto/moviejev/main/docs/article/price.png" /></p>
+<p>A model that only answers typed questions, cannot write prose, and costs 70 times less than the cheapest general model. The question is whether it can hold its own on a real grading task.</p>
+<h2>The recommender</h2>
+<p>The product is deliberately simple. You type a request in plain language, something like "something like Arrival but lighter, no horror". You get back five movies, each with a one-sentence explanation.</p>
+<p>Under the hood it runs five steps:</p>
+<ol>
+<li><strong>Taste profile.</strong> An LLM reads the request and extracts a structured profile: liked titles, genres, themes, tone, era, and a list of things to avoid.</li>
+<li><strong>Candidates.</strong> The LLM proposes fifteen real movies that might fit the profile.</li>
+<li><strong>Verification.</strong> Every proposed title is looked up in The Movie Database (TMDB). Titles that do not exist are dropped. LLMs invent movies more often than you would think, and no scoring model can grade a film that is not real.</li>
+<li><strong>Rerank.</strong> Each verified movie is scored against the profile and the list is reordered. This is the step under test.</li>
+<li><strong>Explanations.</strong> The LLM writes one sentence for each of the top five.</li>
+</ol>
+<p><img alt="How the recommender talks to each model" src="https://raw.githubusercontent.com/SebasPinto/moviejev/main/docs/article/pipeline.png" /></p>
+<p>The rerank step is behind a small interface with one method: given a profile and a list of movies, return a verdict per movie. Three implementations exist and can be switched with an environment variable.</p>
+<p><strong>Jev.</strong> One request per movie. The state is the profile plus the movie's title, year, genres and synopsis, about 300 tokens. Three questions: a Score on a five-level fit scale, a Choice for the main reason it matches (tone, themes, genre, style or era), and a Noul asking whether the movie violates one of the profile's exclusions.</p>
+<p><strong>LLM judge.</strong> The same three questions, the same five-level scale, the same reason labels, sent as a prompt to Claude Sonnet 4.6. It returns a JSON object with a single fit level, a reason, and a boolean for violation.</p>
+<p><strong>None.</strong> Keeps the order the candidates came in. This is the baseline that tells you whether reranking does anything at all.</p>
+<p>The rubric text is defined once and shared by both real rerankers. If the LLM judge saw a different question than Jev, any difference in results could be blamed on the prompt. Both see the same words.</p>
+<h2>How the score is computed</h2>
+<p>This is the part where Jev's design pays off, so it is worth being precise.</p>
+<p>The LLM judge returns a single level, say 3 on a scale of 0 to 4. That becomes a fit score of 0.75 and there is nothing more to extract.</p>
+<p>Jev returns a probability for each of the five levels. Suppose it says level 3 with probability 0.5 and level 4 with probability 0.5. Taking the most likely level would give 3 or 4, a coin flip. Instead, the recommender takes the <em>expected value</em>: the average level weighted by probability, which here is 3.5, or a fit score of 0.875. Two movies that both "most likely" sit at level 3 are now distinguishable by how much probability mass leans toward level 4 versus level 2.</p>
+<p>The final score for each movie is the expected fit multiplied by one minus the violation probability from the Noul question. A movie that Jev is 90 percent sure breaks the "no horror" rule loses 90 percent of its score. No hard threshold, no manual rule.</p>
+<p>Jev also returns a confidence for each answer. The recommender does not use it to filter. It uses it to break ties and to flag results as low confidence so a user interface can label them. Whether to hide low-confidence results is a product decision, and it stays a configuration knob.</p>
+<h2>The evaluation</h2>
+<p>The question was: given the same candidates and the same profile, which reranker puts the movies the user actually liked closer to the top?</p>
+<p>To answer that with real people rather than my own taste, I used MovieLens, the standard public dataset of movie ratings. The small version has 610 users and about 100,000 ratings, each with a timestamp.</p>
+<p>For each user the protocol is:</p>
+<ol>
+<li>Sort their ratings by time. Take the last five movies they rated 4 stars or higher. These are the <em>held-out positives</em>: movies we know the user liked, hidden from the system.</li>
+<li>Build a plain-text request from their earlier ratings only, in the shape a real user would type: "I loved: Toy Story, Heat, The Usual Suspects. I did not enjoy: Batman Forever." Run it through the same profile-extraction step the product uses.</li>
+<li>Mix the five held-out positives with fifteen popular movies the user never rated. Shuffle. Fetch the TMDB card for each of the twenty.</li>
+<li>Let each reranker order the same twenty movies against the same profile.</li>
+<li>Measure how high the five positives landed.</li>
+</ol>
+<p>Fifty users, a fixed random seed so the run is reproducible, and every LLM output cached on disk so reruns only pay for Jev.</p>
+<p>Why not let the LLM propose candidates the way the product does, and check whether it guessed the held-out movies? Because fifteen guesses almost never overlap with five specific titles, for any reranker. That protocol would measure the candidate generator. Fixing the candidate set isolates the component Jev is meant to replace.</p>
+<h3>The metrics</h3>
+<p>Four numbers, all between 0 and 1, all higher-is-better.</p>
+<ul>
+<li><strong>NDCG@10.</strong> Normalized Discounted Cumulative Gain over the top ten. It rewards putting positives high and penalizes them more the further down they sit. A perfect ordering scores 1. This is the standard ranking metric.</li>
+<li><strong>Hit@1.</strong> Is the very first movie one the user liked? Averaged over users, it is the probability the top recommendation is a hit.</li>
+<li><strong>Precision@5.</strong> What fraction of the top five are positives? With five positives among twenty, the ceiling is 1.0 and random order lands near 0.25.</li>
+<li><strong>MRR.</strong> Mean Reciprocal Rank. One divided by the position of the first positive. Rewards getting <em>a</em> hit near the top.</li>
+</ul>
+<h2>Results</h2>
+<p><img alt="Ranking quality" src="https://raw.githubusercontent.com/SebasPinto/moviejev/main/docs/article/quality.png" /></p>
+<p>Both real rerankers are far above random on every metric. Reranking does something, and both models know what a good match looks like.</p>
+<p>Between the two, the picture splits. The LLM judge scores higher on NDCG@10 and Precision@5, the two metrics that reward getting the whole list right. Jev scores higher on Hit@1 and MRR, the two that reward getting the top spot right. Jev's top recommendation was a hit for 56 percent of users. The LLM judge's was a hit for 48 percent.</p>
+<p>Are those differences real? With 50 users, the honest answer requires a paired test. For each user, I computed Jev's score minus the LLM judge's score, then bootstrapped a 95 percent confidence interval on the mean difference. If the interval contains zero, the data cannot tell the two apart.</p>
+<p><img alt="Paired differences" src="https://raw.githubusercontent.com/SebasPinto/moviejev/main/docs/article/paired_diff.png" /></p>
+<p>Every interval contains zero. On quality, the two rerankers are a statistical tie. The LLM judge won more individual users on NDCG@10 (32 to 15) and Jev won more on Hit@1 (10 to 6, with 34 ties), so if either has a real edge, it is the LLM judge on list depth and Jev on the top slot. Neither edge is large enough to show up with this sample size.</p>
+<p>Now the other two axes.</p>
+<p><img alt="Cost and latency" src="https://raw.githubusercontent.com/SebasPinto/moviejev/main/docs/article/cost_latency.png" /></p>
+<p>Both rerankers made 994 judgements, one per movie per user. The LLM judge cost $1.92. Jev cost $0.033. That is 59 times cheaper, and that ratio prices Jev's output tokens at zero because TypeSafe has not published an output price. At any plausible output rate the ratio stays above 50.</p>
+<p>Time to rank one user's twenty candidates was 11.4 seconds at the median for the LLM judge and 1.05 seconds for Jev. Part of that gap is parallelism: the recommender runs eight Jev calls at once and four LLM calls at once, because LLM rate limits make wider concurrency expensive. Per individual call, Jev was about six times faster.</p>
+<h2>What this means</h2>
+<p>For the grading step in this pipeline, Jev delivers the same ranking quality as a frontier LLM judge at roughly one sixtieth of the cost and one tenth of the wall-clock time.</p>
+<p>That changes what you can afford to do. At $0.033 per thousand judgements, scoring twenty candidates per request is not something to budget for. You can score sixty. You can generate three candidate lists and let Jev pick the strongest set. You can rescore the whole catalog slice every time the profile changes. None of that is reasonable at $1.92 per thousand.</p>
+<p>The calibrated distribution is the part I expected to matter and the part this experiment exercised least. The expected-value scoring is in use, and it is why two movies at the same most-likely level still get different scores. But only 0.3 percent of Jev's verdicts fell below the low-confidence threshold, and the violation question rarely fired, because profiles built from star ratings almost never contain a "no horror" clause. A protocol that tests whether Jev's 70 percent really means 70 percent is the next experiment.</p>
+<p>There is also a structural point in Jev's favour that the numbers do not show. The LLM judge produces a level, a label and a boolean by writing JSON, and that JSON has to be parsed. During this run, the LLM occasionally wrote a paragraph where a label was expected, or ran past its token limit mid-object. Each of those had to be caught and handled. Jev returns typed fields with bounded values. There is nothing to parse and nothing to hope for.</p>
+<h2>Caveats, stated plainly</h2>
+<ul>
+<li>Fifty users, one seed, one LLM. Differences under about 0.05 in NDCG are inside the noise, and the noise is what the confidence intervals show.</li>
+<li>The negatives are popular movies, not hard ones. A negative set drawn from the same genres as the positives would separate the rerankers more and could change the ordering.</li>
+<li>Profiles come from rating summaries, not from real free-text requests.</li>
+<li>The LLM judge's confidence is 1.0 by construction, so tie-breaking on confidence can only help Jev. That is a deliberate design choice, and it is a small structural advantage in MRR.</li>
+<li>Jev's SDK was a week old when I wrote this. I called the HTTP endpoint directly with a small client and validated every response against the documented shape.</li>
+</ul>
+<h2>The bottom line</h2>
+<p>If you have an LLM-as-judge step that grades candidates against a fixed rubric, you are probably paying frontier prices for a task a much smaller, purpose-built model can do just as well. In this test, Jev matched Claude Sonnet 4.6 on ranking quality, beat it on the top recommendation, and did it 59 times cheaper and 11 times faster.</p>
+<p>The code, the evaluation protocol, and the raw per-user results are in the repository. The whole experiment reruns with one command and about two dollars of LLM credit.</p>
+<p><strong>Code and results:</strong> <a href="https://github.com/SebasPinto/moviejev">github.com/SebasPinto/moviejev</a></p>
+<p><em>Jev is in early access from TypeSafe AI. I have no affiliation with them; I asked for a key and ran the numbers.</em></p>
+<p>🌺🐇</p>
+</body></html>
