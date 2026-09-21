@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
-<title>Saving Money by Using Jev as the Judge in a Movie Recommender</title>
+<title>Jev vs an LLM Judge in a Movie Recommender: Same Ranking Quality, 59x Cheaper and 11x Faster</title>
 <style>
  body{max-width:720px;margin:40px auto;padding:0 16px;font-family:Georgia,serif;font-size:19px;line-height:1.6;color:#222;background:#fff}
  h2{font-family:system-ui,sans-serif;margin-top:2em} h3{font-family:system-ui,sans-serif}
  img{max-width:100%;height:auto;display:block;margin:1.5em auto} code{font-size:0.85em}
 </style></head><body>
-<h1>Saving Money by Using Jev as the Judge in a Movie Recommender</h1>
-<p><em>A reproducible test of TypeSafe AI's Jev as a reranker, against Claude as a judge, on real MovieLens users.</em></p>
+<h1>Jev vs an LLM Judge in a Movie Recommender: Same Ranking Quality, 59x Cheaper and 11x Faster</h1>
+<p><em>TypeSafe AI's Jev against Claude Sonnet 4.6 as the reranker of a movie recommender, tested on 50 real MovieLens users, with code and raw results.</em></p>
 <p><em>This article was written by me and enhanced with AI.</em></p>
 <hr />
 <p><strong>TL;DR.</strong> I built a movie recommender where a large language model proposes candidates and a second model grades them against your taste. For the grading step I compared Jev, a small model from TypeSafe AI that only answers typed questions and costs $0.042 per million tokens, against Claude Sonnet 4.6 acting as a judge, on 50 real MovieLens users with their actual later ratings as ground truth. Ranking quality was a statistical tie: Jev matched the LLM judge on the standard metrics and beat it on whether the first recommendation was a hit. Jev did it 59 times cheaper and 11 times faster. Code, protocol and raw results are public.</p>

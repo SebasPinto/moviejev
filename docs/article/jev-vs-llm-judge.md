@@ -1,6 +1,6 @@
-# Saving Money by Using Jev as the Judge in a Movie Recommender
+# Jev vs an LLM Judge in a Movie Recommender: Same Ranking Quality, 59x Cheaper and 11x Faster
 
-*A reproducible test of TypeSafe AI's Jev as a reranker, against Claude as a judge, on real MovieLens users.*
+*TypeSafe AI's Jev against Claude Sonnet 4.6 as the reranker of a movie recommender, tested on 50 real MovieLens users, with code and raw results.*
 
 *This article was written by me and enhanced with AI.*
 
