@@ -137,6 +137,6 @@ If you have an LLM-as-judge step that grades candidates against a fixed rubric, 
 
 The code, the evaluation protocol, and the raw per-user results are in the repository. The whole experiment reruns with one command and about two dollars of LLM credit.
 
-`[repo link]`
+**Code and results:** [github.com/SebasPinto/moviejev](https://github.com/SebasPinto/moviejev)
 
 *Jev is in early access from TypeSafe AI. I have no affiliation with them; I asked for a key and ran the numbers.*
