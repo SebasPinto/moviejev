@@ -2,7 +2,7 @@
 
 *A reproducible test of TypeSafe AI's Jev as a reranker, against Claude as a judge, on real MovieLens users.*
 
-*This article was written by me and enhanced with AI. The experiment, the code and the numbers are mine; the AI helped with structure and wording.*
+*This article was written by me and enhanced with AI.*
 
 ---
 
