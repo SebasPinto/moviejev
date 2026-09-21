@@ -1,7 +1,8 @@
-# I swapped the LLM judge in a movie recommender for a $0.04 model. Quality held, and the bill dropped 59x.
+# Saving Money by Using Jev as the Judge in a Movie Recommender
 
 *A reproducible test of TypeSafe AI's Jev as a reranker, against Claude as a judge, on real MovieLens users.*
 
+*This article was written by me and enhanced with AI. The experiment, the code and the numbers are mine; the AI helped with structure and wording.*
 ---
 
 Most LLM products have a step where the model is asked to grade something. Rank these candidates. Pick the best of five drafts. Decide whether this answer violates a rule. That step is usually done by calling the same large language model again with a "you are a strict judge" prompt, parsing its answer, and hoping it was consistent.
@@ -140,3 +141,5 @@ The code, the evaluation protocol, and the raw per-user results are in the repos
 **Code and results:** [github.com/SebasPinto/moviejev](https://github.com/SebasPinto/moviejev)
 
 *Jev is in early access from TypeSafe AI. I have no affiliation with them; I asked for a key and ran the numbers.*
+
+🌺🐇
